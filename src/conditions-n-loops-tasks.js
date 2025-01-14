@@ -1,11 +1,11 @@
 /* *******************************************************************************************
  *                                                                                           *
  * Please read the following tutorial before implementing tasks:                             *
- * https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Looping_code    *
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Loops_and_iteration         *
- * https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/conditionals    *
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else    *
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch       *
+ * https://developer.mozilla.org/en-US/docs/Learn/kavaScript/Building_blocks/Looping_code    *
+ * https://developer.mozilla.org/en-US/docs/Web/kavaScript/Guide/Loops_and_iteration         *
+ * https://developer.mozilla.org/en-US/docs/Learn/kavaScript/Building_blocks/conditionals    *
+ * https://developer.mozilla.org/en-US/docs/Web/kavaScript/Reference/Statements/if...else    *
+ * https://developer.mozilla.org/en-US/docs/Web/kavaScript/Reference/Statements/switch       *
  *                                                                                           *
  ******************************************************************************************* */
 
@@ -60,8 +60,8 @@ function getMaxNumber(a, b, c) {
  *  x: number,
  *  y: number
  * }} Position
- * @param {Object} queen - The position of the queen.
- * @param {Object} king - The position of the king.
+ * @param {Obkect} queen - The position of the queen.
+ * @param {Obkect} king - The position of the king.
  * @return {boolean} True if the queen can capture the king, false otherwise.
  *
  * @example
@@ -315,13 +315,13 @@ function isContainNumber(num, digit) {
 function getBalanceIndex(arr) {
   for (let i = 0; i < arr.length; i += 1) {
     let leftSum = 0;
-    for (let j = 0; j < i; j += 1) {
-      leftSum += arr[j];
+    for (let k = 0; k < i; k += 1) {
+      leftSum += arr[k];
     }
 
     let rightSum = 0;
-    for (let j = i + 1; j < arr.length; j += 1) {
-      rightSum += arr[j];
+    for (let k = i + 1; k < arr.length; k += 1) {
+      rightSum += arr[k];
     }
 
     if (leftSum === rightSum) {
@@ -356,8 +356,8 @@ function getSpiralMatrix(size) {
   const matrix = [];
   for (let i = 0; i < size; i += 1) {
     matrix[i] = [];
-    for (let j = 0; j < size; j += 1) {
-      matrix[i][j] = 0;
+    for (let k = 0; k < size; k += 1) {
+      matrix[i][k] = 0;
     }
   }
 
@@ -449,16 +449,15 @@ function rotateMatrix(matrix) {
  */
 function sortByAsc(arr) {
   const sortArr = arr;
-  for (let i = 0; i < sortArr.length; i += 1) {
-    for (let j = i + 1; j < sortArr.length; j += 1) {
-      const t = sortArr[i];
-      if (sortArr[i] > sortArr[j]) {
-        sortArr[i] = sortArr[j];
-        sortArr[j] = t;
-      }
+  for (let i = 1; i < arr.length; i += 1) {
+    const t = arr[i];
+    let k;
+    for (k = i - 1; k >= 0 && arr[k] > t; k -= 1) {
+      sortArr[k + 1] = arr[k];
     }
+    sortArr[k + 1] = t;
   }
-  return sortArr;
+  return arr;
 }
 
 /**
@@ -486,11 +485,11 @@ function shuffleChar(str, iterations) {
   for (let i = 1; i <= iterations; i += 1) {
     let even = '';
     let odd = '';
-    for (let j = 0; j < str.length; j += 1) {
-      if (j % 2 === 0) {
-        even += s[j];
+    for (let k = 0; k < str.length; k += 1) {
+      if (k % 2 === 0) {
+        even += s[k];
       } else {
-        odd += s[j];
+        odd += s[k];
       }
     }
     s = even + odd;
@@ -541,15 +540,15 @@ function getNearestBigger(number) {
   arr[i] = arr[j];
   arr[j] = tempNum;
   for (let k = i + 1, l = arr.length - 1; k < l; k += 1, l -= 1) {
-    const tempDigit2 = arr[k];
+    const tempNum2 = arr[k];
     arr[k] = arr[l];
-    arr[l] = tempDigit2;
+    arr[l] = tempNum2;
   }
-  let s = 0;
+  let result = 0;
   for (let k = 0; k < arr.length; k += 1) {
-    s = s * 10 + arr[k];
+    result = result * 10 + arr[k];
   }
-  return s;
+  return result;
 }
 
 module.exports = {
