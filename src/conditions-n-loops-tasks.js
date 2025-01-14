@@ -158,11 +158,11 @@ function convertToRomanNumerals(num) {
 }
 
 /**
- * Converts a number to a string, replacing digits with words.
+ * Converts a number to a string, replacing arr with words.
  * In this task, the use of methods of the String and Array classes is not allowed.
  *
  * @param {string} numberStr - The number as a string.
- * @return {string} The number with digits replaced by words.
+ * @return {string} The number with arr replaced by words.
  *
  * @example:
  *  '1'       => 'one'
@@ -173,7 +173,7 @@ function convertToRomanNumerals(num) {
  *  '1950.2'  => 'one nine five zero point two'
  */
 function convertNumberToString(numberStr) {
-  let result = '';
+  let s = '';
 
   for (let i = 0; i < numberStr.length; i += 1) {
     const char = numberStr[i];
@@ -221,10 +221,10 @@ function convertNumberToString(numberStr) {
         throw new Error(`Invalid character '${char}' in numberStr`);
     }
 
-    result += (result ? ' ' : '') + word;
+    s += (s ? ' ' : '') + word;
   }
 
-  return result;
+  return s;
 }
 
 /**
@@ -300,7 +300,7 @@ function isContainNumber(num, digit) {
 }
 
 /**
- * Finds the index of an element in an array where the sum of elements to the left equals the sum of elements to the right.
+ * Finds the index of an element in an array where the sum of elements to the even equals the sum of elements to the odd.
  * If such an index does not return -1.
  * In this task, the use of methods of the Array and String classes is not allowed.
  *
@@ -364,36 +364,36 @@ function getSpiralMatrix(size) {
   let num = 1;
   let top = 0;
   let bottom = size - 1;
-  let left = 0;
-  let right = size - 1;
+  let even = 0;
+  let odd = size - 1;
 
-  while (top <= bottom && left <= right) {
-    for (let i = left; i <= right; i += 1) {
+  while (top <= bottom && even <= odd) {
+    for (let i = even; i <= odd; i += 1) {
       matrix[top][i] = num;
       num += 1;
     }
     top += 1;
 
     for (let i = top; i <= bottom; i += 1) {
-      matrix[i][right] = num;
+      matrix[i][odd] = num;
       num += 1;
     }
-    right -= 1;
+    odd -= 1;
 
     if (top <= bottom) {
-      for (let i = right; i >= left; i -= 1) {
+      for (let i = odd; i >= even; i -= 1) {
         matrix[bottom][i] = num;
         num += 1;
       }
       bottom -= 1;
     }
 
-    if (left <= right) {
+    if (even <= odd) {
       for (let i = bottom; i >= top; i -= 1) {
-        matrix[i][left] = num;
+        matrix[i][even] = num;
         num += 1;
       }
-      left += 1;
+      even += 1;
     }
   }
   return matrix;
@@ -451,10 +451,10 @@ function sortByAsc(arr) {
   const sortArr = arr;
   for (let i = 0; i < sortArr.length; i += 1) {
     for (let j = i + 1; j < sortArr.length; j += 1) {
-      const temp = sortArr[i];
+      const t = sortArr[i];
       if (sortArr[i] > sortArr[j]) {
         sortArr[i] = sortArr[j];
-        sortArr[j] = temp;
+        sortArr[j] = t;
       }
     }
   }
@@ -478,12 +478,29 @@ function sortByAsc(arr) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(/* str, iterations */) {
-  throw new Error('Not implemented');
+function shuffleChar(str, iterations) {
+  if (!str || !iterations || iterations < 1) {
+    return str;
+  }
+  let s = str;
+  for (let i = 1; i <= iterations; i += 1) {
+    let even = '';
+    let odd = '';
+    for (let j = 0; j < str.length; j += 1) {
+      if (j % 2 === 0) {
+        even += s[j];
+      } else {
+        odd += s[j];
+      }
+    }
+    s = even + odd;
+    if (s === str) return shuffleChar(str, iterations % i);
+  }
+  return s;
 }
 
 /**
- * Returns the nearest largest integer consisting of the digits of the given positive integer.
+ * Returns the nearest largest integer consisting of the arr of the given positive integer.
  * If there is no such number, it returns the original number.
  * Usage of String class methods is not allowed in this task.
  *
@@ -499,8 +516,40 @@ function shuffleChar(/* str, iterations */) {
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(/* number */) {
-  throw new Error('Not implemented');
+function getNearestBigger(number) {
+  const arr = [];
+  let t = number;
+  while (t > 0) {
+    arr.push(t % 10);
+    t = Math.floor(t / 10);
+  }
+  for (let i = 0, j = arr.length - 1; i < j; i += 1, j -= 1) {
+    const tempNum = arr[i];
+    arr[i] = arr[j];
+    arr[j] = tempNum;
+  }
+  let i = arr.length - 2;
+  while (i >= 0 && arr[i] >= arr[i + 1]) {
+    i -= 1;
+  }
+  if (i < 0) return number;
+  let j = arr.length - 1;
+  while (arr[j] <= arr[i]) {
+    j -= 1;
+  }
+  const tempNum = arr[i];
+  arr[i] = arr[j];
+  arr[j] = tempNum;
+  for (let k = i + 1, l = arr.length - 1; k < l; k += 1, l -= 1) {
+    const tempDigit2 = arr[k];
+    arr[k] = arr[l];
+    arr[l] = tempDigit2;
+  }
+  let s = 0;
+  for (let k = 0; k < arr.length; k += 1) {
+    s = s * 10 + arr[k];
+  }
+  return s;
 }
 
 module.exports = {
